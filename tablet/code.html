@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(78, 222, 163, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0); }
+}
+.ring-animated {
+  animation: pulse-ring 1.8s infinite;
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "error": "#ffb4ab",
+          "on-secondary": "#3c0091",
+          "secondary-fixed": "#e9ddff",
+          "tertiary": "#ffb95f",
+          "surface-container-lowest": "#0c0e14",
+          "on-secondary-fixed": "#23005c",
+          "surface-bright": "#373940",
+          "on-tertiary-fixed": "#2a1700",
+          "on-secondary-fixed-variant": "#5516be",
+          "primary-fixed": "#6ffbbe",
+          "tertiary-fixed-dim": "#ffb95f",
+          "surface-dim": "#111319",
+          "on-primary": "#003824",
+          "on-tertiary": "#472a00",
+          "on-surface-variant": "#9ca3af",
+          "primary-fixed-dim": "#4edea3",
+          "on-tertiary-container": "#523200",
+          "secondary-container": "#571bc1",
+          "primary": "#4edea3",
+          "tertiary-fixed": "#ffddb8",
+          "on-error": "#690005",
+          "on-surface": "#f1f5f9",
+          "on-background": "#f1f5f9",
+          "surface-container-highest": "#282e3e",
+          "error-container": "#93000a",
+          "surface-tint": "#4edea3",
+          "on-primary-fixed": "#002113",
+          "surface-variant": "#222736",
+          "on-primary-container": "#00422b",
+          "primary-container": "#10b981",
+          "outline-variant": "#2a3244",
+          "surface-container-low": "#10141e",
+          "surface": "#0a0d14",
+          "inverse-surface": "#e2e2eb",
+          "outline": "#4b5563",
+          "inverse-on-surface": "#111319",
+          "surface-container": "#161b26",
+          "inverse-primary": "#006c49",
+          "secondary": "#d0bcff",
+          "on-tertiary-fixed-variant": "#653e00",
+          "background": "#0a0d14",
+          "surface-container-high": "#1e2433",
+          "on-secondary-container": "#c4abff",
+          "secondary-fixed-dim": "#d0bcff",
+          "on-error-container": "#ffdad6",
+          "tertiary-container": "#e29100",
+          "on-primary-fixed-variant": "#005236"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "2xl": "1rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin": "2.5rem",
+          "space-sm": "0.5rem",
+          "space-xl": "2.5rem",
+          "margin-mobile": "1rem",
+          "space-lg": "1.5rem",
+          "gutter": "1.5rem",
+          "space-xs": "0.25rem",
+          "space-md": "1rem",
+          "gutter-mobile": "1rem"
+        },
+        "fontFamily": {
+          "headline-lg-mobile": ["Space Grotesk", "sans-serif"],
+          "display-lg-mobile": ["Space Grotesk", "sans-serif"],
+          "label-sm": ["Space Grotesk", "sans-serif"],
+          "headline-md": ["Space Grotesk", "sans-serif"],
+          "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+          "body-md": ["Plus Jakarta Sans", "sans-serif"],
+          "label-md": ["Space Grotesk", "sans-serif"],
+          "headline-lg": ["Space Grotesk", "sans-serif"],
+          "label-lg": ["Space Grotesk", "sans-serif"],
+          "headline-sm": ["Space Grotesk", "sans-serif"],
+          "display-lg": ["Space Grotesk", "sans-serif"],
+          "display-md": ["Space Grotesk", "sans-serif"],
+          "display-md-mobile": ["Space Grotesk", "sans-serif"],
+          "body-sm": ["Plus Jakarta Sans", "sans-serif"],
+          "tabular-lg": ["Space Grotesk", "monospace"],
+          "tabular-md": ["Space Grotesk", "monospace"]
+        }
+      },
+    },
+  }
+</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-white">
+<!-- Floating Global Toast -->
+<div class="fixed top-24 right-6 z-50 transform translate-y-[-20px] opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container-high/95 border border-emerald-400/40 backdrop-blur-md shadow-[0_8px_30px_rgba(0,0,0,0.7),0_0_15px_rgba(78,222,163,0.2)] text-emerald-200" id="action-toast">
+<span class="material-symbols-outlined text-emerald-400 text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium" id="toast-message">Fast-forwarding to student access...</span>
+</div>
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#0a0d14]/85 backdrop-blur-xl border-b border-outline-variant/60 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"><div class="h-20 max-w-7xl mx-auto px-margin lg:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-primary-container flex items-center justify-center text-white shadow-[0_0_15px_rgba(16,185,129,0.35)]"><span class="material-symbols-outlined text-[20px]">savings</span></div><div class="flex items-baseline gap-space-xs"><span class="font-headline-lg text-headline-sm font-semibold tracking-tight text-white">BudgetJar</span><span class="font-label-sm text-[10px] uppercase px-2 py-0.5 rounded-full bg-surface-container-high text-primary border border-primary/20 tracking-wider">Student Finance</span></div></div><nav class="hidden xl:flex items-center gap-1 p-1.5 bg-surface-container-low/80 border border-outline-variant/50 rounded-xl"><a class="px-space-md py-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-white hover:bg-surface-container transition-all rounded-lg" data-path="overview" href="#">Overview</a><a class="px-space-md py-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-white hover:bg-surface-container transition-all rounded-lg" data-path="budget-system" href="#">Budget System</a><a class="px-space-md py-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-white hover:bg-surface-container transition-all rounded-lg" data-path="smart-jars" href="#">Smart Jars</a><a class="px-space-md py-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-white hover:bg-surface-container transition-all rounded-lg" data-path="expenses" href="#">Expenses</a><a class="px-space-md py-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-white hover:bg-surface-container transition-all rounded-lg" data-path="money-skills" href="#">Money Skills</a><a class="px-space-md py-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-white hover:bg-surface-container transition-all rounded-lg" data-path="decision-simulator" href="#">Decision Simulator</a></nav><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.15)]"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span class="font-label-sm text-[11px] text-emerald-300 font-medium tracking-wide">Live Demo</span></div><button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-body-sm text-body-sm font-semibold hover:from-emerald-400 hover:to-teal-300 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center active:scale-95 cursor-pointer" data-path="start-budgeting" onclick="scrollToSignUp('Welcome to BudgetJar! Complete student verification below.')">Start Budgeting</button><div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-emerald-400 text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]"><div class="flex flex-col w-full">
+<!-- Tablet Ambient Glow -->
+<div class="relative w-full overflow-hidden bg-surface">
+<div class="absolute -top-32 -left-20 w-96 h-96 rounded-full bg-emerald-500/10 blur-[120px] pointer-events-none"></div>
+<div class="absolute top-96 -right-24 w-80 h-80 rounded-full bg-indigo-500/10 blur-[130px] pointer-events-none"></div>
+<div class="absolute top-[48rem] left-1/4 w-96 h-96 rounded-full bg-teal-500/10 blur-[140px] pointer-events-none"></div>
+<div class="max-w-4xl mx-auto px-6 py-8 md:py-12 flex flex-col gap-12 relative z-10">
+<!-- Editorial Tablet Hero & Tactical Digital Jar -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+<!-- Editorial Left Column -->
+<div class="md:col-span-7 flex flex-col gap-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-emerald-500/30 w-fit">
+<span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+<span class="font-label-md text-label-md text-emerald-300 uppercase tracking-wider font-semibold">Autumn Term Allocation</span>
+</div>
+<h1 class="font-headline-lg text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight">
+            Your money deserves a <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">better place</span>.
+          </h1>
+<p class="font-body-lg text-body-md md:text-body-lg text-slate-300 max-w-lg leading-relaxed">
+            A tactile envelope system built specifically for university life. Separate everyday canteen meals, metro passes, and semester goals into clear, frosted ceramic jars.
+          </p>
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<button class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-body-md text-body-md font-bold hover:brightness-110 transition-all shadow-[0_0_25px_rgba(16,185,129,0.35)] active:scale-95 touch-manipulation flex items-center gap-2 cursor-pointer" onclick="scrollToSignUp('Setting up your ₹25,000 monthly student allocation...')">
+<span>Allocate ₹25,000 Stipend</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<div class="flex items-center gap-2 px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant/60 text-slate-200">
+<span class="material-symbols-outlined text-emerald-400 text-[20px]" style="font-variation-settings: 'FILL' 1;">format_image_left</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-slate-300 font-medium">Zero overdraft anxiety</span>
+</div>
+</div>
+</div>
+<!-- Master Glass Jar Visual (Right Column) -->
+<div class="md:col-span-5 flex justify-center">
+<div class="w-full max-w-xs p-6 rounded-2xl bg-surface-container-lowest/90 backdrop-blur-xl border border-emerald-500/30 shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_24px_rgba(16,185,129,0.15)] relative overflow-hidden flex flex-col gap-5">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-semibold">Master Vessel</span>
+<h3 class="font-headline-lg text-headline-sm font-semibold text-white">Main Allowance</h3>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-label-sm text-label-sm uppercase font-semibold">Active</span>
+</div>
+<!-- Stylized Digital Jar Simulation -->
+<div class="relative w-full h-48 rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col justify-end p-4 overflow-hidden shadow-inner cursor-pointer" onclick="toggleJarPreview()">
+<!-- Jar Cap Rim Accent -->
+<div class="absolute top-2 inset-x-8 h-2 rounded-full bg-slate-700/60 border border-slate-600/40"></div>
+<!-- Liquid Level Layer -->
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-emerald-500/35 via-emerald-400/25 to-teal-400/15 backdrop-blur-[2px] border-t border-emerald-400/50 shadow-[0_-4px_16px_rgba(52,211,153,0.3)] transition-all duration-300 ease-out h-[68%] rounded-b-xl flex flex-col justify-between p-3" id="master-liquid">
+<!-- Gentle Wave Accent -->
+<div class="w-full h-1.5 rounded-full bg-emerald-300/40 shadow-[0_0_8px_rgba(110,251,190,0.8)]"></div>
+<div class="flex justify-between items-end text-emerald-300">
+<span class="font-label-sm text-label-sm font-semibold drop-shadow" id="master-pct">68% Available</span>
+<span class="material-symbols-outlined text-[20px] drop-shadow">water_drop</span>
+</div>
+</div>
+<!-- Foreground Value -->
+<div class="relative z-10 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase text-slate-300 font-medium">Remaining Fund</span>
+<span class="font-tabular-lg text-2xl font-bold text-white tracking-tight drop-shadow-md" id="hero-balance">₹17,000</span>
+<span class="font-body-sm text-body-sm text-slate-400">of ₹25,000 Monthly Pool</span>
+</div>
+</div>
+<!-- Touch Interactive Slider to Simulate Expense -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs text-slate-400 font-label-sm font-medium">
+<span class="cursor-pointer hover:text-emerald-300 transition-colors" onclick="stepAllowance(-1000)">- ₹1,000 Tap</span>
+<span class="text-emerald-400 cursor-pointer hover:text-emerald-300 transition-colors" onclick="stepAllowance(1000)">+ ₹1,000 Preview</span>
+</div>
+<input class="w-full accent-emerald-400 h-2 rounded-lg bg-surface-container cursor-pointer touch-manipulation" id="allowance-slider" max="25000" min="2000" step="500" type="range" value="17000"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Value Strip: 2x2 Tablet Balanced Grid -->
+<section class="grid grid-cols-2 gap-4">
+<div class="p-5 rounded-2xl bg-surface-container border border-outline-variant/60 flex flex-col gap-2 hover:border-emerald-500/40 transition-all">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+<span class="material-symbols-outlined text-[22px]">auto_stories</span>
+</div>
+<h4 class="font-headline-lg text-headline-sm text-white pt-1 font-semibold">Literacy First</h4>
+<p class="font-body-sm text-body-sm text-slate-400">Editorial clarity that breaks the cycle of campus end-of-month panic with quiet pacing.</p>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container border border-outline-variant/60 flex flex-col gap-2 hover:border-cyan-500/40 transition-all">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.15)]">
+<span class="material-symbols-outlined text-[22px]">splitscreen</span>
+</div>
+<h4 class="font-headline-lg text-headline-sm text-white pt-1 font-semibold">Physical Envelopes</h4>
+<p class="font-body-sm text-body-sm text-slate-400">Compartmentalize monthly pocket money into dedicated digital containers that never leak.</p>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container border border-outline-variant/60 flex flex-col gap-2 hover:border-amber-500/40 transition-all">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.15)]">
+<span class="material-symbols-outlined text-[22px]">crisis_alert</span>
+</div>
+<h4 class="font-headline-lg text-headline-sm text-white pt-1 font-semibold">Scenario Sandbox</h4>
+<p class="font-body-sm text-body-sm text-slate-400">Simulate impromptu campus trips or tech purchases prior to swiping your card.</p>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container border border-outline-variant/60 flex flex-col gap-2 hover:border-purple-500/40 transition-all">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-[0_0_12px_rgba(139,92,246,0.15)]">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+<h4 class="font-headline-lg text-headline-sm text-white pt-1 font-semibold">Zero Guilt Buffer</h4>
+<p class="font-body-sm text-body-sm text-slate-400">A dedicated fun-jar guarantees guilt-free weekend coffees without touching transit rent.</p>
+</div>
+</section>
+<!-- Monthly Budget Allocation: Tablet 2-Column Grid -->
+<section class="flex flex-col gap-5">
+<div class="flex items-end justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-semibold">Operating Partitions</span>
+<h2 class="font-display-md text-2xl md:text-3xl font-bold text-white">Monthly Allocation</h2>
+</div>
+<span class="font-label-md text-label-md text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl hidden sm:inline-block font-semibold">Total: ₹25,000 / mo</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Card 1: Academic & Rent (Cyan Accent) -->
+<div class="p-5 rounded-2xl bg-surface-container border border-cyan-500/30 shadow-[0_4px_20px_rgba(6,182,212,0.06)] flex flex-col justify-between gap-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+<span class="material-symbols-outlined text-[22px]">home_work</span>
+</div>
+<div>
+<h4 class="font-headline-lg text-headline-sm text-white font-semibold">Dorm &amp; Essentials</h4>
+<span class="font-label-sm text-[11px] text-cyan-300 uppercase tracking-wider font-semibold">Fixed Obligation</span>
+</div>
+</div>
+<span class="font-tabular-md text-lg text-white font-bold">₹10,000</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-cyan-400 shadow-[0_0_8px_#06b6d4] rounded-full" style="width: 100%;"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-400 font-label-sm">
+<span>Locked &amp; Paid (1st of month)</span>
+<span class="text-cyan-400 font-medium">100% committed</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Food & Canteen (Fiery Coral Accent) -->
+<div class="p-5 rounded-2xl bg-surface-container border border-rose-500/30 shadow-[0_4px_20px_rgba(251,113,133,0.06)] flex flex-col justify-between gap-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+<span class="material-symbols-outlined text-[22px]">restaurant</span>
+</div>
+<div>
+<h4 class="font-headline-lg text-headline-sm text-white font-semibold">Campus Dining</h4>
+<span class="font-label-sm text-[11px] text-rose-300 uppercase tracking-wider font-semibold">3 Meals + Canteen</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-tabular-md text-lg text-white font-bold">₹6,200</span>
+<span class="font-body-sm text-body-sm text-slate-400 block">/ ₹7,500</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-rose-400 shadow-[0_0_8px_#fb7185] rounded-full" style="width: 82%;"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-400 font-label-sm">
+<span class="text-rose-300 font-medium">₹1,300 Remaining</span>
+<span>12 days left</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Transit & Commute (Electric Amber Accent) -->
+<div class="p-5 rounded-2xl bg-surface-container border border-amber-500/30 shadow-[0_4px_20px_rgba(245,158,11,0.06)] flex flex-col justify-between gap-4" id="partition-transit-card">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+<span class="material-symbols-outlined text-[22px]">commute</span>
+</div>
+<div>
+<h4 class="font-headline-lg text-headline-sm text-white font-semibold">Metro &amp; Transit</h4>
+<span class="font-label-sm text-[11px] text-amber-300 uppercase tracking-wider font-semibold">Smart Card Auto-Topup</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-tabular-md text-lg text-white font-bold" id="transit-spent-val">₹1,850</span>
+<span class="font-body-sm text-body-sm text-slate-400 block">/ ₹2,500</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-amber-400 shadow-[0_0_8px_#f59e0b] rounded-full transition-all duration-500" id="transit-bar" style="width: 74%;"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-400 font-label-sm">
+<span class="text-amber-300 font-medium" id="transit-rem-val">₹650 Remaining</span>
+<span>28 trips logged</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Social & Coffee (Vivid Violet Accent) -->
+<div class="p-5 rounded-2xl bg-surface-container border border-purple-500/30 shadow-[0_4px_20px_rgba(139,92,246,0.06)] flex flex-col justify-between gap-4" id="partition-fun-card">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400">
+<span class="material-symbols-outlined text-[22px]">local_cafe</span>
+</div>
+<div>
+<h4 class="font-headline-lg text-headline-sm text-white font-semibold">Unplanned &amp; Fun</h4>
+<span class="font-label-sm text-[11px] text-purple-300 uppercase tracking-wider font-semibold">Guilt-Free Buffer</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-tabular-md text-lg text-white font-bold" id="fun-spent-val">₹2,800</span>
+<span class="font-body-sm text-body-sm text-slate-400 block">/ ₹5,000</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-purple-400 shadow-[0_0_8px_#8b5cf6] rounded-full transition-all duration-500" id="fun-bar" style="width: 56%;"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-400 font-label-sm">
+<span class="text-purple-300 font-medium" id="fun-rem-val">₹2,200 Remaining</span>
+<span id="fun-status-text">Comfortably pacing</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Savings Jars: 2-Column Grid with Tap Actions -->
+<section class="flex flex-col gap-5">
+<div class="flex items-end justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-semibold">Sinking Goals</span>
+<h2 class="font-display-md text-2xl md:text-3xl font-bold text-white">Savings Jars</h2>
+</div>
+<span class="font-body-sm text-body-sm text-emerald-400 font-medium">Tap to stash small change</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Jar 1: New Laptop (Emerald / Cyan) -->
+<div class="p-5 rounded-2xl bg-surface-container border border-emerald-500/30 shadow-[0_4px_24px_rgba(16,185,129,0.08)] flex flex-col justify-between gap-5 relative overflow-hidden group">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-emerald-400 font-semibold">Target: ₹65,000</span>
+<h3 class="font-headline-lg text-headline-sm font-semibold text-white">M3 Laptop Upgrade</h3>
+</div>
+<div class="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
+<span class="material-symbols-outlined text-[18px]">laptop_mac</span>
+</div>
+</div>
+<!-- Jar Liquid Display -->
+<div class="relative h-24 rounded-xl bg-surface-container-low border border-outline-variant/50 overflow-hidden flex items-end p-3">
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-emerald-600/50 via-teal-500/40 to-cyan-400/25 border-t border-emerald-400/60 shadow-[0_0_16px_rgba(16,185,129,0.4)] rounded-b-xl transition-all duration-300 ease-out" id="jar-liquid-laptop" style="height: 62%;"></div>
+<div class="relative z-10 flex justify-between items-baseline w-full">
+<span class="font-tabular-lg text-xl font-bold text-white drop-shadow transition-all" id="jar-val-laptop">₹40,500</span>
+<span class="font-label-sm text-label-sm text-emerald-300 font-semibold drop-shadow" id="jar-pct-laptop">62% Accumulated</span>
+</div>
+</div>
+<button class="w-full py-3 rounded-xl bg-surface-container-high border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 hover:text-white transition-all font-body-sm text-body-sm font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] touch-manipulation cursor-pointer" onclick="stashMoney('laptop', 500)">
+<span class="material-symbols-outlined text-[18px] text-emerald-400">add_circle</span>
+<span>+ Stash ₹500</span>
+</button>
+</div>
+<!-- Jar 2: Semester Break Trip (Warm Sunset Peach / Terracotta) -->
+<div class="p-5 rounded-2xl bg-surface-container border border-rose-500/30 shadow-[0_4px_24px_rgba(251,113,133,0.08)] flex flex-col justify-between gap-5 relative overflow-hidden group">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-rose-400 font-semibold">Target: ₹15,000</span>
+<h3 class="font-headline-lg text-headline-sm font-semibold text-white">Goa Reading Retreat</h3>
+</div>
+<div class="w-9 h-9 rounded-full bg-rose-500/20 border border-rose-400/30 flex items-center justify-center text-rose-300">
+<span class="material-symbols-outlined text-[18px]">flight_takeoff</span>
+</div>
+</div>
+<!-- Jar Liquid Display -->
+<div class="relative h-24 rounded-xl bg-surface-container-low border border-outline-variant/50 overflow-hidden flex items-end p-3">
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-orange-600/50 via-rose-500/40 to-amber-400/25 border-t border-rose-400/60 shadow-[0_0_16px_rgba(251,113,133,0.4)] rounded-b-xl transition-all duration-300 ease-out" id="jar-liquid-trip" style="height: 80%;"></div>
+<div class="relative z-10 flex justify-between items-baseline w-full">
+<span class="font-tabular-lg text-xl font-bold text-white drop-shadow transition-all" id="jar-val-trip">₹12,000</span>
+<span class="font-label-sm text-label-sm text-rose-300 font-semibold drop-shadow" id="jar-pct-trip">80% Accumulated</span>
+</div>
+</div>
+<button class="w-full py-3 rounded-xl bg-surface-container-high border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 hover:text-white transition-all font-body-sm text-body-sm font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] touch-manipulation cursor-pointer" onclick="stashMoney('trip', 500)">
+<span class="material-symbols-outlined text-[18px] text-rose-400">add_circle</span>
+<span>+ Stash ₹500</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Student Expense Stream with Horizontal Scrolling Category Filter -->
+<section class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-baseline">
+<h2 class="font-display-md text-2xl md:text-3xl font-bold text-white">Campus Expense Stream</h2>
+<span class="font-body-sm text-body-sm text-slate-400">Updated today</span>
+</div>
+<!-- Tablet Touch Scroll Filter Bar -->
+<div class="flex items-center gap-2 overflow-x-auto py-2 no-scrollbar touch-pan-x" id="expense-filters">
+<button class="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-label-md text-label-md font-bold shrink-0 shadow-[0_0_12px_rgba(16,185,129,0.3)] transition-transform active:scale-95 cursor-pointer filter-btn active-filter" onclick="filterExpenses('all', this)">All Ledgers</button>
+<button class="px-4 py-2 rounded-full bg-surface-container border border-outline-variant/60 text-slate-300 font-label-md text-label-md shrink-0 hover:text-white hover:border-rose-500/40 transition-all active:scale-95 cursor-pointer filter-btn" onclick="filterExpenses('canteen', this)">Canteen &amp; Mess</button>
+<button class="px-4 py-2 rounded-full bg-surface-container border border-outline-variant/60 text-slate-300 font-label-md text-label-md shrink-0 hover:text-white hover:border-amber-500/40 transition-all active:scale-95 cursor-pointer filter-btn" onclick="filterExpenses('transit', this)">Metro &amp; Transit</button>
+<button class="px-4 py-2 rounded-full bg-surface-container border border-outline-variant/60 text-slate-300 font-label-md text-label-md shrink-0 hover:text-white hover:border-cyan-500/40 transition-all active:scale-95 cursor-pointer filter-btn" onclick="filterExpenses('academic', this)">Academic &amp; Print</button>
+<button class="px-4 py-2 rounded-full bg-surface-container border border-outline-variant/60 text-slate-300 font-label-md text-label-md shrink-0 hover:text-white hover:border-purple-500/40 transition-all active:scale-95 cursor-pointer filter-btn" onclick="filterExpenses('coffee', this)">Coffee &amp; Hangouts</button>
+</div>
+</div>
+<!-- Clean Ledger List -->
+<div class="rounded-2xl bg-surface-container border border-outline-variant/60 overflow-hidden flex flex-col" id="ledger-list">
+<!-- Row 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-high/60 transition-colors ledger-item" data-category="coffee">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 shrink-0">
+<span class="material-symbols-outlined text-[20px]">local_cafe</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-white">Artisan Cafe (Library Quad)</span>
+<span class="font-body-sm text-body-sm text-slate-400">Today, 2:15 PM • Coffee &amp; Hangouts</span>
+</div>
+</div>
+<span class="font-tabular-md text-slate-200 font-semibold">- ₹220</span>
+</div>
+<div class="h-[1px] bg-outline-variant/40 w-full ledger-divider" data-category="coffee"></div>
+<!-- Row 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-high/60 transition-colors ledger-item" data-category="transit">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+<span class="material-symbols-outlined text-[20px]">directions_subway</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-white">Metro Transit Auto-Reload</span>
+<span class="font-body-sm text-body-sm text-slate-400">Yesterday • Transit Jar</span>
+</div>
+</div>
+<span class="font-tabular-md text-slate-200 font-semibold">- ₹500</span>
+</div>
+<div class="h-[1px] bg-outline-variant/40 w-full ledger-divider" data-category="transit"></div>
+<!-- Row 3 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-high/60 transition-colors ledger-item" data-category="academic">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+<span class="material-symbols-outlined text-[20px]">print</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-white">Campus Print Kiosk</span>
+<span class="font-body-sm text-body-sm text-slate-400">Oct 14 • Thesis Project Drafts</span>
+</div>
+</div>
+<span class="font-tabular-md text-slate-200 font-semibold">- ₹140</span>
+</div>
+<div class="h-[1px] bg-outline-variant/40 w-full ledger-divider" data-category="academic"></div>
+<!-- Row 4 (Credit) -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-high/60 transition-colors ledger-item" data-category="all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-white">University Research Stipend</span>
+<span class="font-body-sm text-body-sm text-slate-400">Oct 10 • Direct Deposit</span>
+</div>
+</div>
+<span class="font-tabular-md text-emerald-400 font-bold text-base shadow-[0_0_12px_rgba(16,185,129,0.3)]">+ ₹25,000</span>
+</div>
+</div>
+</section>
+<!-- Student Decision Simulator: Tablet Stacked Scenario -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface-container-low border border-indigo-500/25 shadow-[0_4px_30px_rgba(0,0,0,0.5)] flex flex-col gap-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-purple-400 shadow-[0_0_8px_#c4abff]"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-purple-300 font-semibold">Decision Simulator</span>
+</div>
+<h2 class="font-display-md text-2xl md:text-3xl font-bold text-white">Friday Night Dilemma</h2>
+<p class="font-body-md text-body-md text-slate-300">Your cohort is organizing an impromptu off-campus cab trip and dinner (est. ₹1,400). Your Fun Jar currently contains <span class="text-emerald-300 font-semibold" id="sim-current-fun">₹2,200</span>.</p>
+</div>
+<!-- Tablet Optimized Vertical Options Stack -->
+<div class="flex flex-col gap-3" id="simulator-options">
+<!-- Option A -->
+<button class="p-4 rounded-xl bg-surface-container border border-outline-variant/60 hover:border-emerald-400/50 text-left transition-all hover:bg-surface-container-high flex items-center justify-between group active:scale-[0.99] touch-manipulation cursor-pointer" onclick="handleSimulation('A', this)">
+<div class="flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant text-emerald-400 font-bold flex items-center justify-center font-label-md text-label-md opt-badge">A</span>
+<div>
+<span class="font-body-md text-body-md font-semibold text-white block">Fund 100% from Fun Jar</span>
+<span class="font-body-sm text-body-sm text-slate-400">Draw ₹1,400 directly; leave dining &amp; transit untouched.</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-400 transition-colors">arrow_forward</span>
+</button>
+<!-- Option B -->
+<button class="p-4 rounded-xl bg-surface-container border border-outline-variant/60 hover:border-amber-400/50 text-left transition-all hover:bg-surface-container-high flex items-center justify-between group active:scale-[0.99] touch-manipulation cursor-pointer" onclick="handleSimulation('B', this)">
+<div class="flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant text-amber-400 font-bold flex items-center justify-center font-label-md text-label-md opt-badge">B</span>
+<div>
+<span class="font-body-md text-body-md font-semibold text-white block">Split: Share Metro + Join for Dessert Only</span>
+<span class="font-body-sm text-body-sm text-slate-400">Draw only ₹450; bank the remaining ₹950 into your Goa Trip Jar.</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-amber-400 transition-colors">arrow_forward</span>
+</button>
+<!-- Option C -->
+<button class="p-4 rounded-xl bg-surface-container border border-outline-variant/60 hover:border-rose-400/50 text-left transition-all hover:bg-surface-container-high flex items-center justify-between group active:scale-[0.99] touch-manipulation cursor-pointer" onclick="handleSimulation('C', this)">
+<div class="flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant text-rose-400 font-bold flex items-center justify-center font-label-md text-label-md opt-badge">C</span>
+<div>
+<span class="font-body-md text-body-md font-semibold text-white block">Borrow from Transit Pass Jar</span>
+<span class="font-body-sm text-body-sm text-slate-400">Tap reserved metro funds and promise to walk next Monday.</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-rose-400 transition-colors">arrow_forward</span>
+</button>
+</div>
+<!-- Simulation Feedback Result Card -->
+<div class="hidden p-4 rounded-xl bg-emerald-500/15 border border-emerald-400/40 text-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-[0_0_15px_rgba(16,185,129,0.15)] transition-all" id="sim-feedback">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-emerald-400 text-[20px] mt-0.5" id="sim-feedback-icon" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<div>
+<span class="font-label-sm text-[11px] uppercase tracking-wider block font-bold" id="sim-feedback-title">Outcome Simulation</span>
+<p class="font-body-sm text-body-sm text-emerald-100" id="sim-feedback-text">Feedback will appear here.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-center shrink-0 bg-surface-container/60 px-3 py-1.5 rounded-lg border border-outline-variant/40" id="sim-runway-badge">
+<span class="font-label-sm text-[11px] text-slate-300">Runway impact:</span>
+<span class="font-label-sm text-[11px] font-bold text-emerald-400" id="sim-runway-status">100% Secure</span>
+</div>
+</div>
+</section>
+<!-- Financial Literacy: 'Get Better With Money' (2-Column Tablet Grid) -->
+<section class="flex flex-col gap-5">
+<div class="flex items-end justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-semibold">Curated Lessons</span>
+<h2 class="font-display-md text-2xl md:text-3xl font-bold text-white">Get Better With Money</h2>
+</div>
+<a class="font-body-sm text-body-sm text-emerald-400 hover:text-emerald-300 hover:underline hidden sm:inline-block font-medium" href="#">Browse syllabus →</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Lesson Card 1 -->
+<div class="p-5 rounded-2xl bg-surface-container border border-outline-variant/60 flex flex-col justify-between gap-4 hover:border-rose-400/40 transition-colors">
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm uppercase text-rose-400 font-semibold">3 Min Read • Behavioral</span>
+<h4 class="font-headline-lg text-headline-sm text-white font-semibold">The 48-Hour Cart Rule for Online Sales</h4>
+<p class="font-body-sm text-body-sm text-slate-400">Why dormitory boredom spikes impulse deliveries, and how waiting two sunrises dissolves 70% of non-essential buys.</p>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-md text-label-md text-slate-400 font-medium">Module 01</span>
+<span class="material-symbols-outlined text-slate-400 hover:text-white cursor-pointer transition-colors" onclick="toggleBookmark(this)">bookmark_add</span>
+</div>
+</div>
+<!-- Lesson Card 2 -->
+<div class="p-5 rounded-2xl bg-surface-container border border-outline-variant/60 flex flex-col justify-between gap-4 hover:border-emerald-400/40 transition-colors">
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm uppercase text-emerald-400 font-semibold">4 Min Read • Practical</span>
+<h4 class="font-headline-lg text-headline-sm text-white font-semibold">Decoding First Credit Card Terms</h4>
+<p class="font-body-sm text-body-sm text-slate-400">Understanding statement cycles, grace windows, and how to treat revolving credit strictly as a debit pass-through.</p>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-md text-label-md text-slate-400 font-medium">Module 02</span>
+<span class="material-symbols-outlined text-slate-400 hover:text-white cursor-pointer transition-colors" onclick="toggleBookmark(this)">bookmark_add</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Tablet Simplified Section Divider & Mini Banner -->
+<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-r from-emerald-950 via-surface-container to-teal-950 border border-emerald-500/40 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+<div class="flex flex-col gap-1 text-center sm:text-left">
+<h3 class="font-headline-lg text-headline-sm font-bold text-white">Ready for next semester?</h3>
+<p class="font-body-sm text-body-sm text-emerald-300">Lock your semester budget jars in under 3 minutes.</p>
+</div>
+<button class="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-300 text-slate-950 font-body-sm text-body-sm font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(16,185,129,0.35)] shrink-0 touch-manipulation active:scale-95 cursor-pointer" onclick="scrollToSignUp('Welcome aboard! Finish entering your campus email below.')">
+          Open Digital Jar Account
+        </button>
+</section>
+</div>
+</div>
+</div>
+</main><footer class="w-full bg-[#0a0d14] border-t border-outline-variant/40 mt-space-xl" id="signup-section"><div class="max-w-7xl mx-auto px-margin lg:px-margin-desktop py-space-xl"><div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg pb-space-xl"><div class="md:col-span-4 flex flex-col gap-space-sm"><div class="flex items-center gap-space-xs"><div class="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400"><span class="material-symbols-outlined text-[16px]">savings</span></div><span class="font-headline-lg text-headline-sm font-semibold text-white">BudgetJar</span></div><p class="font-body-sm text-body-sm text-slate-400 max-w-sm">Editorial clarity for personal student finance. Grounded envelopes, tactile balance jars, and simulated life scenarios to foster confident adulthood.</p><div class="flex items-center gap-space-xs pt-space-xs"><span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span><span class="font-label-sm text-label-sm text-slate-400">Systems Operational • Version 2.4</span></div></div><div class="md:col-span-2 flex flex-col gap-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-200 font-semibold mb-space-xs">Architecture</span><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="overview" href="#">Overview</a><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="budget-system" href="#">Budget System</a><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="smart-jars" href="#">Smart Jars</a><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="expenses" href="#">Expenses</a></div><div class="md:col-span-3 flex flex-col gap-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-200 font-semibold mb-space-xs">Education</span><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="money-skills" href="#">Financial Skills</a><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="decision-simulator" href="#">Decision Simulator</a><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="student-guide" href="#">Student Guide</a><a class="font-body-sm text-body-sm text-slate-400 hover:text-emerald-400 transition-colors" data-path="savings-jars" href="#">Savings Jars</a></div><div class="md:col-span-3 flex flex-col gap-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-200 font-semibold mb-space-xs">Student Dispatch</span><p class="font-body-sm text-body-sm text-slate-400">Quiet financial insights delivered twice monthly. No noise or hype.</p><form class="flex flex-col gap-2 mt-space-xs" onsubmit="handleDispatchSubmit(event)"><div class="flex items-center gap-space-xs relative"><input class="w-full bg-surface-container border border-outline-variant/70 rounded-xl px-space-sm py-2 font-body-sm text-body-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all duration-300" id="dispatch-email" placeholder="student@university.edu" required="" type="email"/><button class="px-space-md py-2 rounded-xl bg-surface-container-high border border-outline-variant text-slate-200 font-body-sm text-body-sm hover:bg-surface-bright hover:text-white transition-colors shrink-0 cursor-pointer" type="submit">Join</button></div><div class="hidden items-center gap-2 px-3 py-2 rounded-lg bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 text-xs font-medium animate-fadeIn" id="dispatch-success"><span class="material-symbols-outlined text-[16px]">celebration</span><span>🎉 Invitation unlocked for your campus! Check your inbox.</span></div></form></div></div><div class="pt-space-lg border-t border-outline-variant/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md"><p class="font-body-sm text-body-sm text-slate-500 text-xs">BudgetJar is a financial literacy and budgeting prototype created for educational purposes. Not financial advice.</p><p class="font-label-sm text-label-sm text-slate-500">© 2025 BudgetJar Systems Inc. Crafted with editorial care.</p></div></div></footer>
+<script>
+  // Toast notifications helper
+  let toastTimer;
+  function showToast(message) {
+    const toast = document.getElementById('action-toast');
+    const msgEl = document.getElementById('toast-message');
+    if (!toast || !msgEl) return;
+    
+    msgEl.textContent = message;
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+    }, 3200);
+  }
+
+  // 1. Smooth scroll to sign up and highlight email input
+  function scrollToSignUp(customToastMsg) {
+    const section = document.getElementById('signup-section');
+    const emailInput = document.getElementById('dispatch-email');
+    if (section && emailInput) {
+      section.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        emailInput.focus();
+        emailInput.classList.add('ring-2', 'ring-emerald-400', 'border-emerald-400', 'ring-animated');
+        setTimeout(() => {
+          emailInput.classList.remove('ring-animated');
+        }, 3600);
+      }, 500);
+      showToast(customToastMsg || 'Navigating to Student Access...');
+    }
+  }
+
+  // 2. Dispatch / Sign up form handling
+  function handleDispatchSubmit(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById('dispatch-email');
+    const successBadge = document.getElementById('dispatch-success');
+    if (emailInput && emailInput.value) {
+      successBadge.classList.remove('hidden');
+      successBadge.classList.add('flex');
+      showToast('🎉 Invitation unlocked for your campus!');
+      emailInput.blur();
+      emailInput.classList.remove('ring-2', 'ring-emerald-400', 'border-emerald-400', 'ring-animated');
+    }
+  }
+
+  // 3. Allowance Slider & interactive Tap responsive preview
+  const slider = document.getElementById('allowance-slider');
+  const heroBal = document.getElementById('hero-balance');
+  const masterLiquid = document.getElementById('master-liquid');
+  const masterPct = document.getElementById('master-pct');
+
+  function updateMasterAllowance(val) {
+    if (heroBal) heroBal.textContent = '₹' + val.toLocaleString('en-IN');
+    const pct = Math.min(100, Math.max(8, Math.round((val / 25000) * 100)));
+    if (masterLiquid) masterLiquid.style.height = pct + '%';
+    if (masterPct) masterPct.textContent = pct + '% Available';
+  }
+
+  if (slider) {
+    slider.addEventListener('input', (e) => {
+      updateMasterAllowance(parseInt(e.target.value));
+    });
+  }
+
+  function stepAllowance(delta) {
+    if (!slider) return;
+    let cur = parseInt(slider.value) + delta;
+    if (cur > 25000) cur = 25000;
+    if (cur < 2000) cur = 2000;
+    slider.value = cur;
+    updateMasterAllowance(cur);
+  }
+
+  function toggleJarPreview() {
+    if (!slider) return;
+    const cur = parseInt(slider.value);
+    const nextVal = cur > 18000 ? 9500 : 21000;
+    slider.value = nextVal;
+    updateMasterAllowance(nextVal);
+    showToast(`Jar preview: Adjusted allowance to ₹${nextVal.toLocaleString('en-IN')}`);
+  }
+
+  // 4. Stash Money into jars (+₹500 micro-interactions)
+  function stashMoney(jarId, amount) {
+    if (jarId === 'laptop') {
+      const valEl = document.getElementById('jar-val-laptop');
+      const liq = document.getElementById('jar-liquid-laptop');
+      const pctEl = document.getElementById('jar-pct-laptop');
+      let cur = parseInt(valEl.innerText.replace(/[^0-9]/g, '')) + amount;
+      if (cur > 65000) cur = 65000;
+      valEl.innerText = '₹' + cur.toLocaleString('en-IN');
+      const pct = Math.round((cur / 65000) * 100);
+      liq.style.height = pct + '%';
+      pctEl.innerText = pct + '% Accumulated';
+      showToast(`✨ Added ₹${amount} to M3 Laptop Upgrade! (Now ₹${cur.toLocaleString('en-IN')})`);
+    } else if (jarId === 'trip') {
+      const valEl = document.getElementById('jar-val-trip');
+      const liq = document.getElementById('jar-liquid-trip');
+      const pctEl = document.getElementById('jar-pct-trip');
+      let cur = parseInt(valEl.innerText.replace(/[^0-9]/g, '')) + amount;
+      if (cur > 15000) cur = 15000;
+      valEl.innerText = '₹' + cur.toLocaleString('en-IN');
+      const pct = Math.round((cur / 15000) * 100);
+      liq.style.height = pct + '%';
+      pctEl.innerText = pct + '% Accumulated';
+      showToast(`✈️ Added ₹${amount} to Goa Reading Retreat! (Now ₹${cur.toLocaleString('en-IN')})`);
+    }
+  }
+
+  // 5. Decision Simulator: dynamic options, buffer calculation, and runway updates
+  function handleSimulation(optionCode, btn) {
+    const container = document.getElementById('simulator-options');
+    const feedback = document.getElementById('sim-feedback');
+    const feedbackText = document.getElementById('sim-feedback-text');
+    const feedbackTitle = document.getElementById('sim-feedback-title');
+    const feedbackIcon = document.getElementById('sim-feedback-icon');
+    const runwayBadge = document.getElementById('sim-runway-status');
+    const funBalCard = document.getElementById('fun-rem-val');
+    const funSpentCard = document.getElementById('fun-spent-val');
+    const funBar = document.getElementById('fun-bar');
+    const simCurFun = document.getElementById('sim-current-fun');
+    const transitRem = document.getElementById('transit-rem-val');
+    const transitBar = document.getElementById('transit-bar');
+
+    // Reset button states
+    Array.from(container.children).forEach(el => {
+      el.classList.remove('border-emerald-400', 'border-amber-400', 'border-rose-400', 'bg-surface-container-high', 'ring-1');
+    });
+
+    // Feedback config per option
+    feedback.classList.remove('hidden', 'bg-emerald-500/15', 'border-emerald-400/40', 'text-emerald-200', 'bg-amber-500/15', 'border-amber-400/40', 'text-amber-200', 'bg-rose-500/15', 'border-rose-400/40', 'text-rose-200');
+
+    if (optionCode === 'A') {
+      btn.classList.add('border-emerald-400', 'bg-surface-container-high', 'ring-1', 'ring-emerald-400/40');
+      feedback.classList.add('bg-emerald-500/15', 'border-emerald-400/40', 'text-emerald-200');
+      feedbackIcon.className = 'material-symbols-outlined text-emerald-400 text-[20px] mt-0.5';
+      feedbackIcon.innerText = 'check_circle';
+      feedbackTitle.innerText = 'Approved & Buffered';
+      feedbackText.innerText = 'Full ₹1,400 drawn cleanly from Fun Jar. ₹800 remains for incidental campus treats; Transit & Groceries strictly 100% untouched.';
+      runwayBadge.innerText = 'Fully Safe';
+      runwayBadge.className = 'font-label-sm text-[11px] font-bold text-emerald-400';
+      
+      // Update displayed live balances
+      if (funBalCard) funBalCard.innerText = '₹800 Remaining';
+      if (funSpentCard) funSpentCard.innerText = '₹4,200';
+      if (funBar) funBar.style.width = '84%';
+      if (simCurFun) simCurFun.innerText = '₹800';
+      if (transitRem) transitRem.innerText = '₹650 Remaining';
+      if (transitBar) transitBar.style.width = '74%';
+      showToast('Simulator: Fun envelope debited ₹1,400. Transit secured.');
+    } else if (optionCode === 'B') {
+      btn.classList.add('border-amber-400', 'bg-surface-container-high', 'ring-1', 'ring-amber-400/40');
+      feedback.classList.add('bg-amber-500/15', 'border-amber-400/40', 'text-amber-200');
+      feedbackIcon.className = 'material-symbols-outlined text-amber-400 text-[20px] mt-0.5';
+      feedbackIcon.innerText = 'insights';
+      feedbackTitle.innerText = 'High Financial Discipline';
+      feedbackText.innerText = 'Splitting saved ₹950 which redirects straight into your Goa Reading Retreat Jar. Fun buffer remains at ₹1,750.';
+      runwayBadge.innerText = '+₹950 To Goals';
+      runwayBadge.className = 'font-label-sm text-[11px] font-bold text-amber-400';
+      
+      if (funBalCard) funBalCard.innerText = '₹1,750 Remaining';
+      if (funSpentCard) funSpentCard.innerText = '₹3,250';
+      if (funBar) funBar.style.width = '65%';
+      if (simCurFun) simCurFun.innerText = '₹1,750';
+      // bonus stash to trip
+      stashMoney('trip', 950);
+    } else if (optionCode === 'C') {
+      btn.classList.add('border-rose-400', 'bg-surface-container-high', 'ring-1', 'ring-rose-400/40');
+      feedback.classList.add('bg-rose-500/15', 'border-rose-400/40', 'text-rose-200');
+      feedbackIcon.className = 'material-symbols-outlined text-rose-400 text-[20px] mt-0.5';
+      feedbackIcon.innerText = 'warning';
+      feedbackTitle.innerText = 'Category Leak Detected';
+      feedbackText.innerText = 'Dipping into Transit Pass leaves ₹0 for Monday bus/metro reloads. You risk missing morning lab lectures or relying on costly cabs.';
+      runwayBadge.innerText = 'Negative Runway';
+      runwayBadge.className = 'font-label-sm text-[11px] font-bold text-rose-400';
+      
+      if (transitRem) transitRem.innerText = '₹0 Deficit (Overdraft Risk)';
+      if (transitBar) transitBar.style.width = '100%';
+      showToast('⚠️ Caution: Transit envelope breached by ₹1,400.');
+    }
+  }
+
+  // 6. Expense Stream Filter interaction
+  function filterExpenses(category, clickedBtn) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(b => {
+      b.classList.remove('bg-gradient-to-r', 'from-emerald-500', 'to-teal-400', 'text-slate-950', 'font-bold', 'shadow-[0_0_12px_rgba(16,185,129,0.3)]');
+      b.classList.add('bg-surface-container', 'border', 'border-outline-variant/60', 'text-slate-300');
+    });
+
+    clickedBtn.classList.remove('bg-surface-container', 'border', 'border-outline-variant/60', 'text-slate-300');
+    clickedBtn.classList.add('bg-gradient-to-r', 'from-emerald-500', 'to-teal-400', 'text-slate-950', 'font-bold', 'shadow-[0_0_12px_rgba(16,185,129,0.3)]');
+
+    const items = document.querySelectorAll('.ledger-item');
+    const dividers = document.querySelectorAll('.ledger-divider');
+
+    items.forEach((item, index) => {
+      const itemCat = item.getAttribute('data-category');
+      if (category === 'all' || itemCat === category || itemCat === 'all') {
+        item.style.display = 'flex';
+        if (dividers[index]) dividers[index].style.display = 'block';
+      } else {
+        item.style.display = 'none';
+        if (dividers[index]) dividers[index].style.display = 'none';
+      }
+    });
+  }
+
+  // Bookmark toggle micro-action
+  function toggleBookmark(icon) {
+    if (icon.innerText === 'bookmark_add') {
+      icon.innerText = 'bookmark_added';
+      icon.classList.add('text-emerald-400');
+      showToast('Module saved to personal syllabus library.');
+    } else {
+      icon.innerText = 'bookmark_add';
+      icon.classList.remove('text-emerald-400');
+      showToast('Module removed from syllabus.');
+    }
+  }
+</script></body></html>
